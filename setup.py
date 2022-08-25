@@ -9,7 +9,7 @@ setup(
     author_email='be.jafari@madtalk.ir',
     license='MIT',
     install_requires=['numpy' , 'opencv-python' , 'scikit-image' , 'imutils' , 'matplotlib' ],
-    packages=['opencv'],
+    packages=['noyan_opencv'],
 
     classifiers=[
         'Development Status :: 1 - Planning',
