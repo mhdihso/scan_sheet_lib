@@ -274,8 +274,9 @@ def getPapar(src):
     warped = cv2.cvtColor(warped, cv2.COLOR_BGR2GRAY)
 
     dispImage = imutils.resize(warped, height=1000)
-    cv2.imwrite('image_cp.png', dispImage)
-    return 'image_cp.png'
+    cp_im = f"{src}_cp.png"
+    cv2.imwrite(cp_im, dispImage)
+    return cp_im
 
 
 class Scan:
@@ -363,4 +364,7 @@ class Scan:
             allAnswers.update(dics)
             allAnswers = dict(sorted(allAnswers.items(), key=lambda x: x[0], reverse=False))
 
+        det=cv2.QRCodeDetector()
+        val, pts, st_code=det.detectAndDecode(image)
+        allAnswers['qr_code'] = val
         return allAnswers
