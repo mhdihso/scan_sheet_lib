@@ -273,7 +273,7 @@ def getPapar(src):
     warped = cv2.cvtColor(warped, cv2.COLOR_BGR2GRAY)
 
     dispImage = imutils.resize(warped, height=1000)
-    cp_im = f"cp_{src}"
+    cp_im = f"{src}cp.png"
     cv2.imwrite(cp_im, dispImage)
     return cp_im
 
