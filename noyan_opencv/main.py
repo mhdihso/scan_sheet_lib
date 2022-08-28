@@ -3,7 +3,6 @@ import cv2
 
 import operator
 
-answersHelpers = []
 
 import cv2
 import numpy as np
@@ -123,7 +122,7 @@ def getSquare(image):
     return brightest_rectangle
 
 
-def getAnswers(startfrom, mylist, first):
+def getAnswers(startfrom, mylist, first , answersHelpers):
     mylist.sort()
 
 
@@ -274,7 +273,7 @@ def getPapar(src):
     warped = cv2.cvtColor(warped, cv2.COLOR_BGR2GRAY)
 
     dispImage = imutils.resize(warped, height=1000)
-    cp_im = f"{src}_cp.png"
+    cp_im = f"cp_{src}"
     cv2.imwrite(cp_im, dispImage)
     return cp_im
 
@@ -284,6 +283,7 @@ class Scan:
         self.image = image
 
     def scan(self):
+        answersHelpers = []
         allAnswers = {}
         src = str(self)
         image = cv2.imread(getPapar(src))
@@ -360,7 +360,7 @@ class Scan:
                 if (c.h >= 2 and c.w >= 2):
                     shapes.append(c)
                     cv2.rectangle(crop_img, (c.x, c.y), (c.x + c.w, c.y + c.h), (255, 0, 0), 2)
-            dics = getAnswers(lefts[var].x + lefts[var].w, shapes, mm + 1)
+            dics = getAnswers(lefts[var].x + lefts[var].w, shapes, mm + 1 , answersHelpers)
             allAnswers.update(dics)
             allAnswers = dict(sorted(allAnswers.items(), key=lambda x: x[0], reverse=False))
 
