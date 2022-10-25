@@ -287,7 +287,7 @@ class Scan:
         src = str(self)
         det=cv2.QRCodeDetector()
         val, pts, st_code=det.detectAndDecode(cv2.imread(src))
-        allAnswers['qr_code'] = val
+        
 
         image = cv2.imread(getPapar(src))
         height, width, channels = image.shape
@@ -367,5 +367,5 @@ class Scan:
             allAnswers.update(dics)
             allAnswers = dict(sorted(allAnswers.items(), key=lambda x: x[0], reverse=False))
 
-        
+        allAnswers['qr_code'] = val
         return allAnswers
