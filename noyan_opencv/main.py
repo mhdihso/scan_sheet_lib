@@ -285,6 +285,10 @@ class Scan:
         answersHelpers = []
         allAnswers = {}
         src = str(self)
+        det=cv2.QRCodeDetector()
+        val, pts, st_code=det.detectAndDecode(cv2.imread(src))
+        allAnswers['qr_code'] = val
+
         image = cv2.imread(getPapar(src))
         height, width, channels = image.shape
         gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
@@ -363,7 +367,5 @@ class Scan:
             allAnswers.update(dics)
             allAnswers = dict(sorted(allAnswers.items(), key=lambda x: x[0], reverse=False))
 
-        det=cv2.QRCodeDetector()
-        val, pts, st_code=det.detectAndDecode(image)
-        allAnswers['qr_code'] = val
+        
         return allAnswers
