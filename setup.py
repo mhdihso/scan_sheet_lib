@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='open-cy paper detect',
-    version='1.0.1',    
+    version='1.1.0',    
     description='open-cy paper detect for exams',
     url='https://gitlab.com/behraad/openCvCreator',
     author='Behrad Jafari',

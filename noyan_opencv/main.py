@@ -216,67 +216,66 @@ def getPapar(src):
     ratio = image.shape[0] / 1000.0
     orig = image.copy()
     image = imutils.resize(image, height=1000)
+    cp_im = f"{src}cp.png"
+    cv2.imwrite(cp_im, image)
+    return cp_im
     # convert the image to grayscale, blur it, and find edges
     # in the image
 
-    gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-    gary = cv2.GaussianBlur(gray, (5, 5), 0)
-    edged = cv2.Canny(gray, 75, 200)  # minVal, maxVal
+    # gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    # gary = cv2.GaussianBlur(gray, (5, 5), 0)
+    # edged = cv2.Canny(gray, 75, 200)  # minVal, maxVal
 
-    dispImage = cv2.cvtColor(edged.copy(), cv2.COLOR_GRAY2RGB)
-    contours = cv2.findContours(edged.copy(), cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
-    contours = imutils.grab_contours(contours)
-    contours = sorted(contours, key=cv2.contourArea, reverse=True)[:5]
-    flag = True
-    for c in contours:
+    # dispImage = cv2.cvtColor(edged.copy(), cv2.COLOR_GRAY2RGB)
+    # contours = cv2.findContours(edged.copy(), cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
+    # contours = imutils.grab_contours(contours)
+    # contours = sorted(contours, key=cv2.contourArea, reverse=True)[:5]
+    # flag = True
+    # for c in contours:
 
-        perimeter = cv2.arcLength(c, True) 
-        approx = cv2.approxPolyDP(c, 0.02 * perimeter, True)
+    #     perimeter = cv2.arcLength(c, True) 
+    #     approx = cv2.approxPolyDP(c, 0.02 * perimeter, True)
 
-        if len(approx) == 3:
+    #     if len(approx) == 3:
 
-            cv2.drawContours(image, [c], 0, (0, 255, 0), 3)
+    #         cv2.drawContours(image, [c], 0, (0, 255, 0), 3)
 
-            cv2.imwrite('fffff.png', image)
+    #         cv2.imwrite('fffff.png', image)
 
-            cv2.waitKey(0)
+    #         cv2.waitKey(0)
 
-            print("founded")
-            break
+    #         print("founded")
+    #         break
 
-        if len(approx) == 4:
-            #
-            flag = False
+    #     if len(approx) == 4:
+    #         #
+    #         flag = False
 
 
-            for c1 in approx:
+    #         for c1 in approx:
 
-                for c2 in c1:
-                    for c3 in c2:
-                        continue
-            screenContour = approx
-            break
+    #             for c2 in c1:
+    #                 for c3 in c2:
+    #                     continue
+    #         screenContour = approx
+    #         break
 
-    if (flag):
-        width = (image.shape[1])
-        x = [[width, 0], [0, 0], [0, 1000], [width, 1000]]
-        aa_3d_array = np.array(x)
+    # if (flag):
+    #     width = (image.shape[1])
+    #     x = [[width, 0], [0, 0], [0, 1000], [width, 1000]]
+    #     aa_3d_array = np.array(x)
 
-        screenContour = aa_3d_array
-    cv2.drawContours(image, [screenContour], -1, (255, 0, 0), 2)  # -1 => draw all contours, (color), thickness
-    dispImage = cv2.cvtColor(image.copy(), cv2.COLOR_BGR2RGB)
+    #     screenContour = aa_3d_array
+    # cv2.drawContours(image, [screenContour], -1, (255, 0, 0), 2)  # -1 => draw all contours, (color), thickness
+    # dispImage = cv2.cvtColor(image.copy(), cv2.COLOR_BGR2RGB)
 
-    # apply the four point transform to obtain a top-down view of the original image
-    warped = four_point_transform(orig, screenContour.reshape(4, 2) * ratio)
+    # # apply the four point transform to obtain a top-down view of the original image
+    # warped = four_point_transform(orig, screenContour.reshape(4, 2) * ratio)
 
-    # convert the warped image to grayscale, then threshold it to give it that 'black and white' paper effect
-    warped = cv2.cvtColor(warped, cv2.COLOR_BGR2GRAY)
+    # # convert the warped image to grayscale, then threshold it to give it that 'black and white' paper effect
+    # warped = cv2.cvtColor(warped, cv2.COLOR_BGR2GRAY)
 
-    dispImage = imutils.resize(warped, height=1000)
-    cp_im = f"{src}cp.png"
-    cv2.imwrite(cp_im, dispImage)
-    return cp_im
-
+    # dispImage = imutils.resize(warped, height=1000)
 
 class Scan:
     def __init__(self, image):
